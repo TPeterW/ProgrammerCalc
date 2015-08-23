@@ -1,0 +1,327 @@
+﻿<Page
+    x:Class="Programmer_Calc.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Programmer_Calc"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="numBoxStyle">
+            <Setter Property="FontSize" Value="36" />
+            <Setter Property="FontFamily" Value="Arial" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="DodgerBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="30*" />
+        </Grid.RowDefinitions>
+
+        <!--Other -aries-->
+        <!--StackPanel--><!--
+        <StackPanel 
+                x:Name="otherAriesDisplay" 
+                Grid.Row="0" 
+                Margin="3,0,3,0" 
+                Visibility="Visible"
+                Orientation="Vertical"
+            IsTapEnabled="True">
+
+            <TextBlock x:Name="displayProcessTextBlock" 
+                           Text="="
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Height="Auto"
+                           Width="Auto"
+                           Margin="10,20,0,20"
+                           Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="displayResultTextBlock" 
+                           Text="100"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right" 
+                           Margin="3,10,3,20" 
+                           Height="Auto"
+                           Style="{StaticResource numBoxStyle}"/>
+
+            <StackPanel x:Name="threeButtons" Orientation="Horizontal">
+
+                <ToggleButton x:Name="Deci"
+                              Tag="deci"
+                             FontSize="24"
+                             Grid.Row="2"
+                             Grid.Column="0"
+                             Content="Deci"
+                             IsChecked="True"
+                             IsTapEnabled="True"
+                              Margin="10"
+                              Tapped="arieTapped"/>
+
+                <ToggleButton x:Name="Octa"
+                              Tag="octa"
+                             FontSize="24"
+                             Content="Octa"
+                              Margin="10"
+                              Tapped="arieTapped"/>
+
+                <ToggleButton x:Name="Hexa"
+                              Tag="hexa"
+                             FontSize="24"
+                             Content="Hexa"
+                             IsTapEnabled="True"
+                              Margin="10"
+                              Tapped="arieTapped"/>
+            </StackPanel>
+
+        </StackPanel>-->
+
+        <Grid x:Name="otherAriesDisplay" Visibility="Visible" Grid.Row="0" Margin="3,0,3,0" Opacity="100">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <ToggleButton x:Name="Deci"
+                              Tag="deci"
+                              FontSize="24"
+                              Grid.Row="2"
+                              Grid.Column="0"
+                              Content="Deci"
+                              IsChecked="True"
+                              IsTapEnabled="True"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="BlueViolet"
+                              BorderThickness="1"
+                              BorderBrush="DeepSkyBlue"
+                              HorizontalContentAlignment="Stretch"
+                              Tapped="arieTapped"/>
+                
+                <ToggleButton x:Name="Octa" 
+                              Tag="octa"
+                              FontSize="24"
+                              Grid.Row="2"
+                              Grid.Column="1"
+                              Content="Octa"
+                              IsChecked="False"
+                              IsTapEnabled="True"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="BlueViolet"
+                              BorderThickness="1"
+                              BorderBrush="DeepSkyBlue"
+                              HorizontalContentAlignment="Stretch"
+                              Tapped="arieTapped"/>
+
+                <ToggleButton x:Name="Hexa" 
+                              Tag="hexa"
+                              FontSize="24"
+                              Grid.Row="2"
+                              Grid.Column="2"
+                              Content="Hexa"
+                              IsChecked="False"
+                              IsTapEnabled="True"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="BlueViolet"
+                              BorderThickness="1"
+                              BorderBrush="DeepSkyBlue"
+                              HorizontalContentAlignment="Stretch"
+                              Tapped="arieTapped"/>
+
+                <ToggleButton x:Name="Bina" 
+                              Tag="bina"
+                              FontSize="24"
+                              Grid.Row="2"
+                              Grid.Column="3"
+                              Content="Bina"
+                              IsChecked="False"
+                              IsTapEnabled="True"
+                              VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="BlueViolet"
+                              BorderThickness="1"
+                              BorderBrush="DeepSkyBlue"
+                              HorizontalContentAlignment="Stretch"
+                              Tapped="arieTapped"/>
+
+                <TextBlock x:Name="displayProcessTextBlock" 
+                           Text="="
+                           Grid.Row="0"
+                           Grid.ColumnSpan="4"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Width="Auto"
+                           Margin="10,0,0,0"
+                           Style="{StaticResource numBoxStyle}"/>
+
+                <TextBlock x:Name="displayResultTextBlock" 
+                           Text="100"
+                           Grid.Row="1"
+                           Grid.ColumnSpan="4"
+                           VerticalAlignment="Center"
+                           TextAlignment="Right" 
+                           Margin="3,0,3,20" 
+                           Style="{StaticResource numBoxStyle}"/>
+            </Grid>
+
+        <!--Number Pad-->
+        <Grid x:Name="BinaryDisplay" Visibility="Collapsed" Grid.Row="0" Margin="10,0,10,0" IsTapEnabled="False">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <!--First Line-->
+            <TextBlock x:Name="dig63" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig62" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig61" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig60" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig59" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="5" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig58" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="6" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig57" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="7" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig56" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="8" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig55" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="10" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig54" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="11" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig53" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="12" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig52" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="13" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig51" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="15" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig50" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="16" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig49" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="17" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig48" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="18" Style="{StaticResource numBoxStyle}"/>
+
+
+            <!--Second Line-->
+            <TextBlock x:Name="dig47" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig46" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig45" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig44" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig43" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="5" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig42" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="6" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig41" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="7" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig40" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="8" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig39" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="10" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig38" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="11" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig37" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="12" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig36" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="13" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig35" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="15" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig34" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="16" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig33" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="17" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig32" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="18" Style="{StaticResource numBoxStyle}"/>
+
+
+            <!--Third Line-->
+            <TextBlock x:Name="dig31" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig30" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig29" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig28" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig27" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="5" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig26" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="6" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig25" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="7" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig24" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="8" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig23" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="10" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig22" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="11" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig21" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="12" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig20" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="13" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig19" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="15" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig18" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="16" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig17" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="17" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig16" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="18" Style="{StaticResource numBoxStyle}"/>
+
+
+            <!--Fourth Line-->
+            <TextBlock x:Name="dig15" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig14" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig13" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig12" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig11" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="5" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig10" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="6" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig9" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="7" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig8" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="8" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig7" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="10" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig6" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="11" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig5" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="12" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig4" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="13" Style="{StaticResource numBoxStyle}"/>
+
+            <TextBlock x:Name="dig3" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="15" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig2" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="16" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig1" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="17" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig0" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="18" Style="{StaticResource numBoxStyle}"/>
+        </Grid>
+
+
+
+        <!--Slider-Pick-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="twoCom"
+                              Grid.Column="0"
+                              Content="2's Com"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              Click="twoComClicked"/>
+
+            <ToggleButton x:Name="BinaryOn"
+                              Grid.Column="1"
+                              Content="Binary Input" 
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="False"
+                              Tapped="BinaryOn_Tapped"/>
+        </Grid>
+
+        <FlipView x:Name="flipView" HorizontalAlignment="Left" Height="0" Margin="544,-14,-150,0" VerticalAlignment="Top" Width="6"/>
+
+
+    </Grid>
+
+</Page>
