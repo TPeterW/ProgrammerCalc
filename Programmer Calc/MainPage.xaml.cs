@@ -52,7 +52,16 @@ namespace Programmer_Calc
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
 
-            await statusBar.HideAsync();
+            //await statusBar.HideAsync();
+
+            //statusBar.BackgroundColor = (App.Current.Resources["PhoneAccentBrush"] as SolidColorBrush).Color;
+            statusBar.BackgroundColor = Windows.UI.Colors.DodgerBlue;
+            statusBar.BackgroundOpacity = 1;
+
+            statusBar.ProgressIndicator.Text = "Programmer Calculator";
+            statusBar.ProgressIndicator.ProgressValue = 0;
+
+            await statusBar.ProgressIndicator.ShowAsync();
         }
 
         private void digit_Tapped(object sender, TappedRoutedEventArgs e)
@@ -77,14 +86,23 @@ namespace Programmer_Calc
         {
             if ((bool)((ToggleButton)sender).IsChecked)
             {
-                BinaryDisplay.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                otherAriesDisplay.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-                
+                binaryDisplay.Visibility = Visibility.Visible;
+                otherAriesDisplay.Visibility = Visibility.Collapsed;
+
+                numberPads.Visibility = Visibility.Collapsed;
+                threeDisplays.Visibility = Visibility.Visible;
+
+                showBinaryInput.Begin();
             }
             else
             {
-                otherAriesDisplay.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                BinaryDisplay.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                otherAriesDisplay.Visibility = Visibility.Visible;
+                binaryDisplay.Visibility = Visibility.Collapsed;
+
+                numberPads.Visibility = Visibility.Visible;
+                threeDisplays.Visibility = Visibility.Collapsed;
+
+                hideBinaryInput.Begin();
             }
         }
 
@@ -94,32 +112,100 @@ namespace Programmer_Calc
 
             if(button.Tag.Equals("deci"))
             {
-                    Deci.IsChecked = true;
-                    Octa.IsChecked = false;
-                    Hexa.IsChecked = false;
-                    Bina.IsChecked = false;
+                Deci.IsChecked = true;
+                Octa.IsChecked = false;
+                Hexa.IsChecked = false;
+                Bina.IsChecked = false;
+
+                if(numberPadDeci.Visibility != Visibility.Visible)
+                {
+                    showNumberPadDeci.Begin();
+                    numberPadDeci.Visibility = Visibility.Visible;
+                    numberPadHex.Visibility = Visibility.Collapsed;
+                }
+
+                button_2.IsEnabled = true;
+                button_3.IsEnabled = true;
+                button_4.IsEnabled = true;
+                button_5.IsEnabled = true;
+                button_6.IsEnabled = true;
+                button_7.IsEnabled = true;
+                button_8.IsEnabled = true;
+                button_9.IsEnabled = true;
+                button_dot.IsEnabled = true;
             }
             else if (button.Tag.Equals("octa"))
             {
-                    Deci.IsChecked = false;
-                    Octa.IsChecked = true;
-                    Hexa.IsChecked = false;
-                    Bina.IsChecked = false;
+                Deci.IsChecked = false;
+                Octa.IsChecked = true;
+                Hexa.IsChecked = false;
+                Bina.IsChecked = false;
+
+                if (numberPadDeci.Visibility != Visibility.Visible)
+                {
+                    showNumberPadDeci.Begin();
+                    numberPadDeci.Visibility = Visibility.Visible;
+                    numberPadHex.Visibility = Visibility.Collapsed;
+                }
+
+                button_2.IsEnabled = true;
+                button_3.IsEnabled = true;
+                button_4.IsEnabled = true;
+                button_5.IsEnabled = true;
+                button_6.IsEnabled = true;
+                button_7.IsEnabled = true;
+                button_8.IsEnabled = false;
+                button_9.IsEnabled = false;
+                button_dot.IsEnabled = false;
             }
             else if (button.Tag.Equals("hexa"))
             {
-                    Deci.IsChecked = false;
-                    Octa.IsChecked = false;
-                    Hexa.IsChecked = true;
-                    Bina.IsChecked = false;
+                Deci.IsChecked = false;
+                Octa.IsChecked = false;
+                Hexa.IsChecked = true;
+                Bina.IsChecked = false;
+
+                if (numberPadHex.Visibility != Visibility.Visible)
+                {
+                    hideNumberPadDeci.Begin();
+                    numberPadDeci.Visibility = Visibility.Collapsed;
+                    numberPadHex.Visibility = Visibility.Visible;
+                }
             }
             else if (button.Tag.Equals("bina"))
             {
-                    Deci.IsChecked = false;
-                    Octa.IsChecked = false;
-                    Hexa.IsChecked = false;
-                    Bina.IsChecked = true;
+                Deci.IsChecked = false;
+                Octa.IsChecked = false;
+                Hexa.IsChecked = false;
+                Bina.IsChecked = true;
+
+                if (numberPadDeci.Visibility != Visibility.Visible)
+                {
+                    showNumberPadDeci.Begin();
+                    numberPadDeci.Visibility = Visibility.Visible;
+                    numberPadHex.Visibility = Visibility.Collapsed;
+                }
+
+                button_2.IsEnabled = false;
+                button_3.IsEnabled = false;
+                button_4.IsEnabled = false;
+                button_5.IsEnabled = false;
+                button_6.IsEnabled = false;
+                button_7.IsEnabled = false;
+                button_8.IsEnabled = false;
+                button_9.IsEnabled = false;
+                button_dot.IsEnabled = false;
             }
+        }
+
+        private void Button_Click_Hex(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
