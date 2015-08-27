@@ -98,8 +98,8 @@
 
     <Grid Background="DodgerBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*" />
-            <RowDefinition Height="8*" />
+            <RowDefinition Height="18*" />
+            <RowDefinition Height="5*" />
             <RowDefinition Height="30*" />
         </Grid.RowDefinitions>
 
@@ -259,7 +259,7 @@
             </Grid>
 
         <!--Number Pad-->
-        <Grid x:Name="binaryDisplay" Visibility="Collapsed" Grid.Row="0" Margin="10,0,10,0" IsTapEnabled="False">
+        <Grid x:Name="binaryDisplay" Visibility="Collapsed" Grid.Row="0" Margin="10,0,10,0" IsTapEnabled="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>

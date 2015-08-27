@@ -33,6 +33,7 @@ using System.Threading.Tasks;
 		
 	- char charAt(string str, int i)
 		* returns the character at index i of string str
+        * this function later was proved to be replaceable by "String[index]"
 */
 
 namespace Programmer_Calc
@@ -41,111 +42,231 @@ namespace Programmer_Calc
     {
         private double storedValue;
         private double currentOnScreen;
-        private enum sign { plus, minus, multi, div, none };
+        public enum sign { plus, minus, multi, div, none };
         private sign lastSign;
 
-        private bool justPressedSign;
-
-        private string result;
+        //private string result;
 
 
         public BasicCalculator()
         {
             currentOnScreen = 0;            // indicates the value of the content on display
-            lastSign = sign.none;           // no previous operation
-            justPressedSign = false;        // it would be the first time to press a sign button
+            storedValue = 0;
+            LastSign = sign.none;           // no previous operation
         }
 
-        public string Result
+        public sign LastSign
         {
-            get { return result; }
-            set { result = value; }
+            get { return lastSign; }
+            set { lastSign = value; }
         }
+
+        //public string Result
+        //{
+        //    get { return result; }
+        //    set { result = value; }
+        //}
 
         public void UpdateCurrent(string input)
         {
-            currentOnScreen = Convert.ToDouble(input);          // if doesn't work, use tryParse
-            justPressedSign = false;
+            bool canParse = Double.TryParse(input, out currentOnScreen);          // if doesn't work, use tryParse
         }
 
         public string Equals()
         {
-            string tempResult = "";
-            // TODO: Check if result in double makes a difference
-            // TODO: Specifically if all the ".000" is kept in the box
-
-            switch(lastSign)
+            switch(LastSign)
             {
                 case sign.none:
-                    // do nothing
+                    storedValue = currentOnScreen;
                     break;
                 case sign.plus:
-                    tempResult = (storedValue + currentOnScreen).ToString();
+                    storedValue = storedValue + currentOnScreen;
                     break;
                 case sign.minus:
-                    tempResult = (storedValue - currentOnScreen).ToString();
+                    storedValue = storedValue - currentOnScreen;
                     break;
                 case sign.multi:
-                    tempResult = (storedValue * currentOnScreen).ToString();
+                    storedValue = storedValue * currentOnScreen;
                     break;
                 case sign.div:
-                    tempResult = (storedValue / currentOnScreen).ToString();
+                    storedValue = storedValue / currentOnScreen;
                     break;
             }
 
-            lastSign = sign.none;
+            LastSign = sign.none;
+            currentOnScreen = storedValue;
 
-            return tempResult;
+            return storedValue.ToString();
         }
 
-        public string Add()
+        public string Add(out string processText)
         {
-            if (lastSign == sign.none)
+            if (LastSign == sign.none)
             {
-                storedValue = currentOnScreen;
-                currentOnScreen = 0;
-                lastSign = sign.plus;
-                justPressedSign = true;
+                // store currently on-screen value and don't do anything
 
+                storedValue = currentOnScreen;
+
+                processText = storedValue.ToString();
+
+                LastSign = sign.plus;
                 return "+";
             }
             else
             {
-                switch (lastSign)
+                switch (LastSign)
                 {
                     case sign.plus:
-
+                        storedValue = storedValue + currentOnScreen;
                         break;
                     case sign.minus:
-
+                        storedValue = storedValue - currentOnScreen;
                         break;
                     case sign.multi:
-
+                        storedValue = storedValue * currentOnScreen;
                         break;
                     case sign.div:
-
+                        storedValue = storedValue / currentOnScreen;
                         break;
                 }
-                
-                return "0";                      //TODO: To be deleted
             }
+            currentOnScreen = 0;
+            processText = storedValue.ToString();
+            LastSign = sign.plus;
+
+            return "+";
         }
 
-        private char charAt(string str, int i)
+        public string Sub(out string processText)
         {
-            char ch;
-            char[] array = str.ToCharArray();
+            if (LastSign == sign.none)
+            {
+                storedValue = currentOnScreen;
 
-            try
-            {
-                ch = array[i];
+                processText = storedValue.ToString();
+
+                LastSign = sign.minus;
+                return "-";
             }
-            catch (Exception e)
+            else
             {
-                return '0';
+                switch (LastSign)
+                {
+                    case sign.plus:
+                        storedValue = storedValue + currentOnScreen;
+                        break;
+                    case sign.minus:
+                        storedValue = storedValue - currentOnScreen;
+                        break;
+                    case sign.multi:
+                        storedValue = storedValue * currentOnScreen;
+                        break;
+                    case sign.div:
+                        storedValue = storedValue / currentOnScreen;
+                        break;
+                }
             }
-    
-            return ch;
+            currentOnScreen = 0;
+            processText = storedValue.ToString();
+            LastSign = sign.minus;
+
+            return "-";
         }
+
+        public string Multi(out string processText)
+        {
+            if (LastSign == sign.none)
+            {
+                storedValue = currentOnScreen;
+
+                processText = storedValue.ToString();
+
+                LastSign = sign.multi;
+                return "×";
+            }
+            else
+            {
+                switch (LastSign)
+                {
+                    case sign.plus:
+                        storedValue = storedValue + currentOnScreen;
+                        break;
+                    case sign.minus:
+                        storedValue = storedValue - currentOnScreen;
+                        break;
+                    case sign.multi:
+                        storedValue = storedValue * currentOnScreen;
+                        break;
+                    case sign.div:
+                        storedValue = storedValue / currentOnScreen;
+                        break;
+                }
+            }
+            currentOnScreen = 0;
+            processText = storedValue.ToString();
+            LastSign = sign.multi;
+
+            return "×";
+        }
+
+        public string Div(out string processText)
+        {
+            if (LastSign == sign.none)
+            {
+                storedValue = currentOnScreen;
+
+                processText = storedValue.ToString();
+
+                LastSign = sign.div;
+                return "÷";
+            }
+            else
+            {
+                switch (LastSign)
+                {
+                    case sign.plus:
+                        storedValue = storedValue + currentOnScreen;
+                        break;
+                    case sign.minus:
+                        storedValue = storedValue - currentOnScreen;
+                        break;
+                    case sign.multi:
+                        storedValue = storedValue * currentOnScreen;
+                        break;
+                    case sign.div:
+                        storedValue = storedValue / currentOnScreen;
+                        break;
+                }
+            }
+            currentOnScreen = 0;
+            processText = storedValue.ToString();
+            LastSign = sign.div;
+
+            return "÷";
+        }
+
+        public void Initialise()
+        {
+            storedValue = 0;
+            currentOnScreen = 0;
+            LastSign = sign.none;
+        }
+
+        //public char charAt(string str, int i)
+        //{
+        //    char ch;
+        //    char[] array = str.ToCharArray();
+
+        //    try
+        //    {
+        //        ch = array[i];
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return '0';
+        //    }
+    
+        //    return ch;
+        //}
     }
 }

@@ -25,6 +25,10 @@ namespace Programmer_Calc
     public sealed partial class MainPage : Page
     {
         StatusBar statusBar;
+        BasicCalculator calculator;
+        Converter converter;
+        bool justPressedSign, justPressedEquals;
+        string currentBinary, currentOctal, currentDecimal, currentHex;
 
         public MainPage()
         {
@@ -35,6 +39,11 @@ namespace Programmer_Calc
             statusBar = StatusBar.GetForCurrentView();
 
             HardwareButtons.BackPressed += QuitApp;
+
+            calculator = new BasicCalculator();
+            converter = new Converter();
+            justPressedSign = false;
+            justPressedEquals = false;
         }
 
         /// <summary>
@@ -64,22 +73,17 @@ namespace Programmer_Calc
             await statusBar.ProgressIndicator.ShowAsync();
         }
 
+        private void QuitApp(object sender, BackPressedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
+
         private void digit_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (((TextBlock)sender).Text == "0")
                 ((TextBlock)sender).Text = "1";
             else
                 ((TextBlock)sender).Text = "0";
-        }
-
-        private void QuitApp(object sender, BackPressedEventArgs e)
-        {
-            Application.Current.Exit();
-        }
-
-        private void twoComClicked(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private void BinaryOn_Tapped(object sender, TappedRoutedEventArgs e)
@@ -198,14 +202,148 @@ namespace Programmer_Calc
             }
         }
 
-        private void Button_Click_Hex(object sender, RoutedEventArgs e)
+        private void twoComClicked(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            var key = (sender as Button).Content.ToString();
+            string processText;
+
+            switch (key)
+            {
+                #region fourOperations
+                case "+":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.plus;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Add(out processText);
+                        displayProcessTextBlock.Text = processText;
+                    }
+                    justPressedSign = true;
+                    break;
+                case "-":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.minus;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Sub(out processText);
+                        displayProcessTextBlock.Text = processText;
+                    }
+                    justPressedSign = true;
+                    break;
+                case "×":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.multi;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Multi(out processText);
+                        displayProcessTextBlock.Text = processText;
+                    }
+                    justPressedSign = true;
+                    break;
+                case "÷":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.div;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Div(out processText);
+                        displayProcessTextBlock.Text = processText;
+                    }
+                    justPressedSign = true;
+                    break;
+                #endregion
+
+                case ".":
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    if (displayResultTextBlock.Text.Contains(".") || displayResultTextBlock.Text.Contains("+") || displayResultTextBlock.Text.Contains("-") 
+                        || displayResultTextBlock.Text.Contains("×") || displayResultTextBlock.Text.Contains("÷"))
+                    {
+                        // do nothing
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text += ".";
+                    }
+                    break;
+                case "DEL":
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    if (displayResultTextBlock.Text.Equals("+") || displayResultTextBlock.Text.Equals("-")
+                        || displayResultTextBlock.Text.Equals("×") || displayResultTextBlock.Text.Equals("÷"))
+                    {
+                        // do nothing
+                    }
+                    else if(displayResultTextBlock.Text.Length < 2)
+                    {
+                        displayResultTextBlock.Text = "0";
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = displayResultTextBlock.Text.Substring(0, displayResultTextBlock.Text.Length - 1);
+                    }
+                    break;
+                case "=":
+                    justPressedSign = false;
+                    justPressedEquals = true;
+                    processText = calculator.Equals();
+                    displayProcessTextBlock.Text = processText;
+                    displayResultTextBlock.Text = processText;
+                    break;
+                case "C":
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    displayProcessTextBlock.Text = "=";
+                    displayResultTextBlock.Text = "0";
+                    calculator.Initialise();
+                    break;
+                default:
+                    if (justPressedEquals || displayResultTextBlock.Text.Equals("0") || displayResultTextBlock.Text.Equals("+") || displayResultTextBlock.Text.Equals("-") ||
+                        displayResultTextBlock.Text.Equals("×") || displayResultTextBlock.Text.Equals("÷"))
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.UpdateCurrent(key);
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text += key;
+                        calculator.UpdateCurrent(displayResultTextBlock.Text);
+                    }
+
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    break;
+            }
+        }
+
+        private void Button_Click_Hex(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Update_Panels()
+        {
+
         }
     }
 }
