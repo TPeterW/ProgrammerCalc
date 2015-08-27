@@ -50,7 +50,7 @@ namespace Programmer_Calc
 
         public BasicCalculator()
         {
-            currentOnScreen = 0;            // indicates the value of the content on display
+            CurrentOnScreen = 0;            // indicates the value of the content on display
             storedValue = 0;
             LastSign = sign.none;           // no previous operation
         }
@@ -59,6 +59,12 @@ namespace Programmer_Calc
         {
             get { return lastSign; }
             set { lastSign = value; }
+        }
+
+        public double CurrentOnScreen
+        {
+            get { return currentOnScreen; }
+            set { currentOnScreen = value; }
         }
 
         //public string Result
@@ -77,24 +83,24 @@ namespace Programmer_Calc
             switch(LastSign)
             {
                 case sign.none:
-                    storedValue = currentOnScreen;
+                    storedValue = CurrentOnScreen;
                     break;
                 case sign.plus:
-                    storedValue = storedValue + currentOnScreen;
+                    storedValue = storedValue + CurrentOnScreen;
                     break;
                 case sign.minus:
-                    storedValue = storedValue - currentOnScreen;
+                    storedValue = storedValue - CurrentOnScreen;
                     break;
                 case sign.multi:
-                    storedValue = storedValue * currentOnScreen;
+                    storedValue = storedValue * CurrentOnScreen;
                     break;
                 case sign.div:
-                    storedValue = storedValue / currentOnScreen;
+                    storedValue = storedValue / CurrentOnScreen;
                     break;
             }
 
             LastSign = sign.none;
-            currentOnScreen = storedValue;
+            CurrentOnScreen = storedValue;
 
             return storedValue.ToString();
         }
@@ -105,7 +111,7 @@ namespace Programmer_Calc
             {
                 // store currently on-screen value and don't do anything
 
-                storedValue = currentOnScreen;
+                storedValue = CurrentOnScreen;
 
                 processText = storedValue.ToString();
 
@@ -117,20 +123,20 @@ namespace Programmer_Calc
                 switch (LastSign)
                 {
                     case sign.plus:
-                        storedValue = storedValue + currentOnScreen;
+                        storedValue = storedValue + CurrentOnScreen;
                         break;
                     case sign.minus:
-                        storedValue = storedValue - currentOnScreen;
+                        storedValue = storedValue - CurrentOnScreen;
                         break;
                     case sign.multi:
-                        storedValue = storedValue * currentOnScreen;
+                        storedValue = storedValue * CurrentOnScreen;
                         break;
                     case sign.div:
-                        storedValue = storedValue / currentOnScreen;
+                        storedValue = storedValue / CurrentOnScreen;
                         break;
                 }
             }
-            currentOnScreen = 0;
+            CurrentOnScreen = 0;
             processText = storedValue.ToString();
             LastSign = sign.plus;
 
@@ -141,7 +147,7 @@ namespace Programmer_Calc
         {
             if (LastSign == sign.none)
             {
-                storedValue = currentOnScreen;
+                storedValue = CurrentOnScreen;
 
                 processText = storedValue.ToString();
 
@@ -153,20 +159,20 @@ namespace Programmer_Calc
                 switch (LastSign)
                 {
                     case sign.plus:
-                        storedValue = storedValue + currentOnScreen;
+                        storedValue = storedValue + CurrentOnScreen;
                         break;
                     case sign.minus:
-                        storedValue = storedValue - currentOnScreen;
+                        storedValue = storedValue - CurrentOnScreen;
                         break;
                     case sign.multi:
-                        storedValue = storedValue * currentOnScreen;
+                        storedValue = storedValue * CurrentOnScreen;
                         break;
                     case sign.div:
-                        storedValue = storedValue / currentOnScreen;
+                        storedValue = storedValue / CurrentOnScreen;
                         break;
                 }
             }
-            currentOnScreen = 0;
+            CurrentOnScreen = 0;
             processText = storedValue.ToString();
             LastSign = sign.minus;
 
@@ -177,7 +183,7 @@ namespace Programmer_Calc
         {
             if (LastSign == sign.none)
             {
-                storedValue = currentOnScreen;
+                storedValue = CurrentOnScreen;
 
                 processText = storedValue.ToString();
 
@@ -189,20 +195,20 @@ namespace Programmer_Calc
                 switch (LastSign)
                 {
                     case sign.plus:
-                        storedValue = storedValue + currentOnScreen;
+                        storedValue = storedValue + CurrentOnScreen;
                         break;
                     case sign.minus:
-                        storedValue = storedValue - currentOnScreen;
+                        storedValue = storedValue - CurrentOnScreen;
                         break;
                     case sign.multi:
-                        storedValue = storedValue * currentOnScreen;
+                        storedValue = storedValue * CurrentOnScreen;
                         break;
                     case sign.div:
-                        storedValue = storedValue / currentOnScreen;
+                        storedValue = storedValue / CurrentOnScreen;
                         break;
                 }
             }
-            currentOnScreen = 0;
+            CurrentOnScreen = 0;
             processText = storedValue.ToString();
             LastSign = sign.multi;
 
@@ -213,7 +219,7 @@ namespace Programmer_Calc
         {
             if (LastSign == sign.none)
             {
-                storedValue = currentOnScreen;
+                storedValue = CurrentOnScreen;
 
                 processText = storedValue.ToString();
 
@@ -225,20 +231,20 @@ namespace Programmer_Calc
                 switch (LastSign)
                 {
                     case sign.plus:
-                        storedValue = storedValue + currentOnScreen;
+                        storedValue = storedValue + CurrentOnScreen;
                         break;
                     case sign.minus:
-                        storedValue = storedValue - currentOnScreen;
+                        storedValue = storedValue - CurrentOnScreen;
                         break;
                     case sign.multi:
-                        storedValue = storedValue * currentOnScreen;
+                        storedValue = storedValue * CurrentOnScreen;
                         break;
                     case sign.div:
-                        storedValue = storedValue / currentOnScreen;
+                        storedValue = storedValue / CurrentOnScreen;
                         break;
                 }
             }
-            currentOnScreen = 0;
+            CurrentOnScreen = 0;
             processText = storedValue.ToString();
             LastSign = sign.div;
 
@@ -248,7 +254,7 @@ namespace Programmer_Calc
         public void Initialise()
         {
             storedValue = 0;
-            currentOnScreen = 0;
+            CurrentOnScreen = 0;
             LastSign = sign.none;
         }
 

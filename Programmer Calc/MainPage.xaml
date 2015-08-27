@@ -361,18 +361,18 @@
 
             <TextBlock x:Name="dig11" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="5" Style="{StaticResource numBoxStyle}"/>
             <TextBlock x:Name="dig10" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="6" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig9" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="7" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig8" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="8" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig09" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="7" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig08" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="8" Style="{StaticResource numBoxStyle}"/>
 
-            <TextBlock x:Name="dig7" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="10" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig6" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="11" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig5" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="12" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig4" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="13" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig07" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="10" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig06" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="11" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig05" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="12" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig04" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="13" Style="{StaticResource numBoxStyle}"/>
 
-            <TextBlock x:Name="dig3" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="15" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig2" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="16" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig1" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="17" Style="{StaticResource numBoxStyle}"/>
-            <TextBlock x:Name="dig0" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="18" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig03" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="15" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig02" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="16" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig01" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="17" Style="{StaticResource numBoxStyle}"/>
+            <TextBlock x:Name="dig00" Tapped="digit_Tapped" Text="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="18" Style="{StaticResource numBoxStyle}"/>
         </Grid>
 
 
@@ -407,7 +407,7 @@
             </StackPanel>
         </StackPanel>-->
 
-        <Grid x:Name="numberPads" Grid.Row="2">
+        <Grid x:Name="numberPads" Grid.Row="2" Visibility="Visible">
             <!--Decimal-->
             <Grid x:Name="numberPadDeci" Grid.Row="2" Visibility="Visible">
                 <Grid.RowDefinitions>

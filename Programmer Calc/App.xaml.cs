@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.ApplicationInsights;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,6 +36,8 @@ namespace Programmer_Calc
         /// </summary>
         public App()
         {
+            WindowsAppInitializer.InitializeAsync();
+
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
         }
