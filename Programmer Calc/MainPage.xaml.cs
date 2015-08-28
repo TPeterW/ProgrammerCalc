@@ -89,48 +89,142 @@ namespace Programmer_Calc
 
         private void digit_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            string tempResult = "";
+            //string tempResult = "";         // prepare to make a new string to put back into the panel
 
             if (((TextBlock)sender).Text == "0")
                 ((TextBlock)sender).Text = "1";
             else
                 ((TextBlock)sender).Text = "0";
 
-            int position = 0;
-            bool canParse = int.TryParse(((TextBlock)sender).Name.Substring(3, 2), out position);
+            #region updateCurrentBinary
+            currentBinary = "";
 
-            for (int i = 0; i < 64; i++)
+            currentBinary += dig63.Text;
+            currentBinary += dig62.Text;
+            currentBinary += dig61.Text;
+            currentBinary += dig60.Text;
+            currentBinary += dig59.Text;
+            currentBinary += dig58.Text;
+            currentBinary += dig57.Text;
+            currentBinary += dig56.Text;
+
+            currentBinary += dig55.Text;
+            currentBinary += dig54.Text;
+            currentBinary += dig53.Text;
+            currentBinary += dig52.Text;
+            currentBinary += dig51.Text;
+            currentBinary += dig50.Text;
+            currentBinary += dig49.Text;
+            currentBinary += dig48.Text;
+
+            currentBinary += dig47.Text;
+            currentBinary += dig46.Text;
+            currentBinary += dig45.Text;
+            currentBinary += dig44.Text;
+            currentBinary += dig43.Text;
+            currentBinary += dig42.Text;
+            currentBinary += dig41.Text;
+            currentBinary += dig40.Text;
+
+            currentBinary += dig39.Text;
+            currentBinary += dig38.Text;
+            currentBinary += dig37.Text;
+            currentBinary += dig36.Text;
+            currentBinary += dig35.Text;
+            currentBinary += dig34.Text;
+            currentBinary += dig33.Text;
+            currentBinary += dig32.Text;
+
+            currentBinary += dig31.Text;
+            currentBinary += dig30.Text;
+            currentBinary += dig29.Text;
+            currentBinary += dig28.Text;
+            currentBinary += dig27.Text;
+            currentBinary += dig26.Text;
+            currentBinary += dig25.Text;
+            currentBinary += dig24.Text;
+
+            currentBinary += dig23.Text;
+            currentBinary += dig22.Text;
+            currentBinary += dig21.Text;
+            currentBinary += dig20.Text;
+            currentBinary += dig19.Text;
+            currentBinary += dig18.Text;
+            currentBinary += dig17.Text;
+            currentBinary += dig16.Text;
+
+            currentBinary += dig15.Text;
+            currentBinary += dig14.Text;
+            currentBinary += dig13.Text;
+            currentBinary += dig12.Text;
+            currentBinary += dig11.Text;
+            currentBinary += dig10.Text;
+            currentBinary += dig09.Text;
+            currentBinary += dig08.Text;
+
+            currentBinary += dig07.Text;
+            currentBinary += dig06.Text;
+            currentBinary += dig05.Text;
+            currentBinary += dig04.Text;
+            currentBinary += dig03.Text;
+            currentBinary += dig02.Text;
+            currentBinary += dig01.Text;
+            currentBinary += dig00.Text;
+            #endregion
+
+            #region uselessPoorCode
+            //int position = 0;
+            //bool canParse = int.TryParse(((TextBlock)sender).Name.Substring(3, 2), out position);
+
+            //for (int i = 0; i < 64; i++)
+            //{
+            //    if ((63 - i) == position)
+            //    {
+            //        tempResult += ((TextBlock)sender).Text;
+            //    }
+            //    else
+            //    {
+            //        tempResult += currentBinary[i];
+            //    }
+            //}
+
+            //currentDecimal = converter.binaToDeci(tempResult);
+            ////decimalDisplay.Text = position + "";
+            //Update_Panels(currentDecimal);
+            //calculator.UpdateCurrent(currentDecimal);
+            //if (currentArie == 2)
+            //{
+            //    displayResultTextBlock.Text = converter.binaToDeci(tempResult);
+            //}
+            //else if (currentArie == 8)
+            //{
+            //    displayResultTextBlock.Text = converter.binaToDeci(tempResult);
+            //}
+            //else if (currentArie == 16)
+            //{
+            //    displayResultTextBlock.Text = converter.binaToHex(tempResult);
+            //}
+            //else
+            //{
+            //    displayResultTextBlock.Text = tempResult;
+            //}
+            //currentBinary = tempResult;
+            #endregion
+
+            // TODO: update the three displays
+            if (!currentBinary.Contains("1"))
             {
-                if ((63 - i) == position)
-                {
-                    tempResult += ((TextBlock)sender).Text;
-                }
-                else
-                {
-                    tempResult += currentBinary[i];
-                }
-            }
-            
-            currentDecimal = converter.binaToDeci(tempResult);
-            Update_Panels(currentDecimal);
-            calculator.UpdateCurrent(currentDecimal);
-            if(Deci.IsChecked == true)
-            {
-                displayResultTextBlock.Text = converter.binaToDeci(tempResult);
-            }
-            else if(Octa.IsChecked == true)
-            {
-                displayResultTextBlock.Text = converter.binaToDeci(tempResult);
-            }
-            else if(Hexa.IsChecked == true)
-            {
-                displayResultTextBlock.Text = converter.binaToHex(tempResult);
+                decimalDisplay.Text = "0";
+                octalDisplay.Text = "0";
+                hexDisplay.Text = "0";
             }
             else
             {
-                displayResultTextBlock.Text = tempResult;
+                decimalDisplay.Text = trim(converter.binaToDeci(currentBinary));
+                octalDisplay.Text = trim(converter.binaToOcta(currentBinary));
+                hexDisplay.Text = trim(converter.binaToHex(currentBinary));
             }
-            currentBinary = tempResult;
+
         }
 
         private void BinaryOn_Tapped(object sender, TappedRoutedEventArgs e)
@@ -152,6 +246,25 @@ namespace Programmer_Calc
 
                 numberPads.Visibility = Visibility.Visible;
                 threeDisplays.Visibility = Visibility.Collapsed;
+
+                calculator.CurrentOnScreen = Double.Parse(converter.binaToDeci(trim(currentBinary)));
+                if(currentArie == 8)
+                {
+                    displayResultTextBlock.Text = octalDisplay.Text;
+                }
+                else if(currentArie == 10)
+                {
+                    displayResultTextBlock.Text = decimalDisplay.Text;
+                }
+                else if (currentArie == 16)
+                {
+                    displayResultTextBlock.Text = hexDisplay.Text;
+                }
+                else
+                {
+                    displayResultTextBlock.Text = trim(currentBinary);
+                }
+
 
                 hideBinaryInput.Begin();
             }
@@ -277,7 +390,7 @@ namespace Programmer_Calc
                 {
                     // do nothing
                 }
-                if (displayResultTextBlock.Text.Length < 1 || ulong.Parse(displayResultTextBlock.Text) == 0)
+                if (displayResultTextBlock.Text.Length < 1)
                 {
                     displayResultTextBlock.Text = "0";
                 }
@@ -316,7 +429,7 @@ namespace Programmer_Calc
                 {
                     // do nothing
                 }
-                if (displayResultTextBlock.Text.Length < 1 || ulong.Parse(displayResultTextBlock.Text) == 0)
+                if (displayResultTextBlock.Text.Equals("0000") || displayResultTextBlock.Text.Equals("000") || displayResultTextBlock.Text.Equals("00") || displayResultTextBlock.Text.Equals("0") || displayResultTextBlock.Text.Equals(""))
                 {
                     displayResultTextBlock.Text = "0";
                 }
@@ -552,7 +665,6 @@ namespace Programmer_Calc
                     calculator.Initialise();                                                // initialise calculator
                     currentDecimal = "0";
                     currentBinary = "";
-                    currentArie = 10;                                                       // back to base10
                     for (int k = 0; k < 64; k++) { currentBinary += "0"; }                  // initialise currentBinary
                     Update_Panels("0");
                     break;
@@ -601,12 +713,264 @@ namespace Programmer_Calc
         private void Button_Click_Hex(object sender, RoutedEventArgs e)
         {
             // TODO:
+            var key = (sender as Button).Content.ToString();
+            string processText;
+
+            switch (key)
+            {
+                #region fourOperations
+                #region +
+                case "+":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.plus;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Add(out processText);
+                        if (currentArie == 2)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToBina(processText);
+                        }
+                        else if (currentArie == 8)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToOcta(processText);
+                        }
+                        else if (currentArie == 16)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToHex(processText);
+                        }
+                        else
+                        {
+                            displayProcessTextBlock.Text = processText;
+                        }
+                    }
+                    justPressedSign = true;
+                    Update_Panels(displayProcessTextBlock.Text);
+                    break;
+                #endregion
+                #region -
+                case "-":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.minus;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Sub(out processText);
+                        if (currentArie == 2)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToBina(processText);
+                        }
+                        else if (currentArie == 8)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToOcta(processText);
+                        }
+                        else if (currentArie == 16)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToHex(processText);
+                        }
+                        else
+                        {
+                            displayProcessTextBlock.Text = processText;
+                        }
+                    }
+                    justPressedSign = true;
+                    Update_Panels(displayProcessTextBlock.Text);
+                    break;
+                #endregion
+                #region ×
+                case "×":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.multi;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Multi(out processText);
+                        if (currentArie == 2)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToBina(processText);
+                        }
+                        else if (currentArie == 8)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToOcta(processText);
+                        }
+                        else if (currentArie == 16)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToHex(processText);
+                        }
+                        else
+                        {
+                            displayProcessTextBlock.Text = processText;
+                        }
+                    }
+                    justPressedSign = true;
+                    Update_Panels(displayProcessTextBlock.Text);
+                    break;
+                #endregion
+                #region ÷
+                case "÷":
+                    justPressedEquals = false;
+                    if (justPressedSign)
+                    {
+                        displayResultTextBlock.Text = key;
+                        calculator.LastSign = BasicCalculator.sign.div;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = calculator.Div(out processText);
+                        if (currentArie == 2)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToBina(processText);
+                        }
+                        else if (currentArie == 8)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToOcta(processText);
+                        }
+                        else if (currentArie == 16)
+                        {
+                            displayProcessTextBlock.Text = converter.deciToHex(processText);
+                        }
+                        else
+                        {
+                            displayProcessTextBlock.Text = processText;
+                        }
+                    }
+                    justPressedSign = true;
+                    Update_Panels(displayProcessTextBlock.Text);
+                    break;
+                #endregion
+                #endregion
+
+                #region utilityButtons
+                case ".":
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    if (displayResultTextBlock.Text.Contains(".") || displayResultTextBlock.Text.Contains("+") || displayResultTextBlock.Text.Contains("-")
+                        || displayResultTextBlock.Text.Contains("×") || displayResultTextBlock.Text.Contains("÷"))
+                    {
+                        // do nothing
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text += ".";
+                    }
+                    break;
+                case "DEL":
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    if (displayResultTextBlock.Text.Equals("+") || displayResultTextBlock.Text.Equals("-")
+                        || displayResultTextBlock.Text.Equals("×") || displayResultTextBlock.Text.Equals("÷"))
+                    {
+                        // do nothing
+                    }
+                    else if (displayResultTextBlock.Text.Length < 2)
+                    {
+                        displayResultTextBlock.Text = "0";
+                        calculator.UpdateCurrent("0");
+                        Update_Panels(displayResultTextBlock.Text);
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text = displayResultTextBlock.Text.Substring(0, displayResultTextBlock.Text.Length - 1);
+                        calculator.UpdateCurrent(displayResultTextBlock.Text);
+                        Update_Panels(displayResultTextBlock.Text);
+                    }
+                    break;
+                case "=":
+                    justPressedSign = false;
+                    justPressedEquals = true;
+                    processText = calculator.Equals();
+                    Update_Panels(processText);
+
+                    if (currentArie == 2)
+                    {
+                        displayProcessTextBlock.Text = converter.deciToBina(processText);
+                    }
+                    else if (currentArie == 8)
+                    {
+                        displayProcessTextBlock.Text = converter.deciToOcta(processText);
+                    }
+                    else if (currentArie == 16)
+                    {
+                        displayProcessTextBlock.Text = converter.deciToHex(processText);
+                    }
+                    else
+                    {
+                        displayProcessTextBlock.Text = processText;
+                    }
+                    displayResultTextBlock.Text = displayProcessTextBlock.Text;
+                    break;
+                case "Clear":
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    displayProcessTextBlock.Text = "=";
+                    displayResultTextBlock.Text = "0";
+                    calculator.Initialise();                                                // initialise calculator
+                    currentDecimal = "0";
+                    currentBinary = "";
+                    for (int k = 0; k < 64; k++) { currentBinary += "0"; }                  // initialise currentBinary
+                    Update_Panels("0");
+                    break;
+                #endregion
+
+                #region numberButtons
+                default:
+                    if (justPressedEquals || displayResultTextBlock.Text.Equals("0") || displayResultTextBlock.Text.Equals("+") || displayResultTextBlock.Text.Equals("-") ||
+                        displayResultTextBlock.Text.Equals("×") || displayResultTextBlock.Text.Equals("÷"))                         // just pressed signs or an initial state
+                    {
+                        displayResultTextBlock.Text = key;
+                    }
+                    else
+                    {
+                        displayResultTextBlock.Text += key;
+                    }
+
+                    if (currentArie == 16)
+                    {
+                        calculator.UpdateCurrent(converter.hexaToDeci(displayResultTextBlock.Text));
+                    }
+
+                    justPressedSign = false;
+                    justPressedEquals = false;
+                    break;
+                    #endregion
+            }
+
+            //currentDecimal = calculator.CurrentOnScreen.ToString();                          // could also just take from displayResultTextBlock.Text
+            Update_Panels(displayResultTextBlock.Text);
+            CheckSize();
         }
 
         private void Update_Panels(string currentOnDisplayResultTextBlock)
         {
+            string deci = "0";
+
             // three displays
-            string deci = currentOnDisplayResultTextBlock;
+            if(currentArie == 2)
+            {
+                deci = converter.binaToDeci(currentOnDisplayResultTextBlock);
+            }
+            else if (currentArie == 8)
+            {
+                deci = converter.octaToDeci(currentOnDisplayResultTextBlock);
+            }
+            else if (currentArie == 10)
+            {
+                deci = currentOnDisplayResultTextBlock;
+            }
+            else if (currentArie == 16)
+            {
+                deci = converter.hexaToDeci(currentOnDisplayResultTextBlock);
+            }
+
             ulong tempDeci;
             if(deci.Length > 15)
             {
@@ -845,6 +1209,22 @@ namespace Programmer_Calc
             {
                 octalDisplay.FontSize = 40;
             }
+        }
+
+        private string trim(string input)                   // to get rid of the 0s in the front
+        {
+            bool first = true;
+            string newString = "";
+            for(int i = 0; i < input.Length; i++)
+            {
+                if(!first || input[i] != '0')
+                {
+                    newString += input[i];
+                    first = false;
+                }
+            }
+
+            return newString;
         }
     }
 }
