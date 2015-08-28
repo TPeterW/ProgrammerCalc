@@ -235,6 +235,11 @@ namespace Programmer_Calc
                 {
                     // do nothing
                 }
+                // in case currentOnScreen is 0
+                if (displayResultTextBlock.Text.Length < 1 || ulong.Parse(displayResultTextBlock.Text) == 0)
+                {
+                    displayResultTextBlock.Text = "0";
+                }
 
                 button_2.IsEnabled = true;
                 button_3.IsEnabled = true;
@@ -272,6 +277,10 @@ namespace Programmer_Calc
                 {
                     // do nothing
                 }
+                if (displayResultTextBlock.Text.Length < 1 || ulong.Parse(displayResultTextBlock.Text) == 0)
+                {
+                    displayResultTextBlock.Text = "0";
+                }
 
                 if (numberPadHex.Visibility != Visibility.Visible)
                 {
@@ -307,6 +316,10 @@ namespace Programmer_Calc
                 {
                     // do nothing
                 }
+                if (displayResultTextBlock.Text.Length < 1 || ulong.Parse(displayResultTextBlock.Text) == 0)
+                {
+                    displayResultTextBlock.Text = "0";
+                }
 
                 if (numberPadDeci.Visibility != Visibility.Visible)
                 {
@@ -331,7 +344,7 @@ namespace Programmer_Calc
 
         private void twoComClicked(object sender, RoutedEventArgs e)
         {
-
+            // TODO:
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -587,7 +600,7 @@ namespace Programmer_Calc
 
         private void Button_Click_Hex(object sender, RoutedEventArgs e)
         {
-
+            // TODO:
         }
 
         private void Update_Panels(string currentOnDisplayResultTextBlock)
@@ -630,7 +643,23 @@ namespace Programmer_Calc
             }
 
             // binary panel
-            string bina = converter.deciToBina(currentOnDisplayResultTextBlock);
+            string bina = "";
+            if (currentArie == 10)
+            {
+                bina = converter.deciToBina(currentOnDisplayResultTextBlock);
+            }
+            else if (currentArie == 8)
+            {
+                bina = converter.octaToBina(currentOnDisplayResultTextBlock);
+            }
+            else if (currentArie == 16)
+            {
+                bina = converter.hexaToBina(currentOnDisplayResultTextBlock);
+            }
+            else
+            {
+                bina = currentOnDisplayResultTextBlock;
+            }
             while (bina.Length < 64)
             {
                 bina = "0" + bina;
