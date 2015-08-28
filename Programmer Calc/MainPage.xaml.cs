@@ -28,7 +28,7 @@ namespace Programmer_Calc
         BasicCalculator calculator;
         Converter converter;
         bool justPressedSign, justPressedEquals;
-        string currentDecimal, currentBinary;
+        string currentBinary;
         int currentArie;
 
         public MainPage()
@@ -237,6 +237,10 @@ namespace Programmer_Calc
                 numberPads.Visibility = Visibility.Collapsed;
                 threeDisplays.Visibility = Visibility.Visible;
 
+                decimalDisplay.Text = calculator.CurrentOnScreen.ToString();
+                octalDisplay.Text = converter.deciToOcta(calculator.CurrentOnScreen.ToString());
+                hexDisplay.Text = converter.deciToHex(calculator.CurrentOnScreen.ToString());
+
                 showBinaryInput.Begin();
             }
             else
@@ -250,21 +254,20 @@ namespace Programmer_Calc
                 calculator.CurrentOnScreen = Double.Parse(converter.binaToDeci(trim(currentBinary)));
                 if(currentArie == 8)
                 {
-                    displayResultTextBlock.Text = octalDisplay.Text;
+                    displayResultTextBlock.Text = converter.deciToOcta(calculator.CurrentOnScreen.ToString());
                 }
                 else if(currentArie == 10)
                 {
-                    displayResultTextBlock.Text = decimalDisplay.Text;
+                    displayResultTextBlock.Text = calculator.CurrentOnScreen.ToString();
                 }
                 else if (currentArie == 16)
                 {
-                    displayResultTextBlock.Text = hexDisplay.Text;
+                    displayResultTextBlock.Text = converter.deciToHex(calculator.CurrentOnScreen.ToString());
                 }
                 else
                 {
                     displayResultTextBlock.Text = trim(currentBinary);
                 }
-
 
                 hideBinaryInput.Begin();
             }
@@ -663,7 +666,6 @@ namespace Programmer_Calc
                     displayProcessTextBlock.Text = "=";
                     displayResultTextBlock.Text = "0";
                     calculator.Initialise();                                                // initialise calculator
-                    currentDecimal = "0";
                     currentBinary = "";
                     for (int k = 0; k < 64; k++) { currentBinary += "0"; }                  // initialise currentBinary
                     Update_Panels("0");
@@ -914,7 +916,6 @@ namespace Programmer_Calc
                     displayProcessTextBlock.Text = "=";
                     displayResultTextBlock.Text = "0";
                     calculator.Initialise();                                                // initialise calculator
-                    currentDecimal = "0";
                     currentBinary = "";
                     for (int k = 0; k < 64; k++) { currentBinary += "0"; }                  // initialise currentBinary
                     Update_Panels("0");
