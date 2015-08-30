@@ -29,6 +29,14 @@
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="TextTrimming" Value="WordEllipsis" />
         </Style>
+
+        <Style TargetType="TextBlock" x:Key="binaryFootnotes">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0, -5, 0, 0" />
+            <Setter Property="Foreground" Value="Yellow" />
+            <Setter Property="Opacity" Value="0.6" />
+        </Style>
     </Application.Resources>
 
 </Application>

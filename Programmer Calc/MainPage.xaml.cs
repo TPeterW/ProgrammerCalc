@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
@@ -40,7 +41,7 @@ namespace Programmer_Calc
 
             statusBar = StatusBar.GetForCurrentView();
 
-            HardwareButtons.BackPressed += QuitApp;
+            HardwareButtons.BackPressed += Quit_App;
 
             calculator = new BasicCalculator();
             converter = new Converter();
@@ -88,12 +89,12 @@ namespace Programmer_Calc
             await statusBar.ProgressIndicator.ShowAsync();
         }
 
-        private void QuitApp(object sender, BackPressedEventArgs e)
+        private void Quit_App(object sender, BackPressedEventArgs e)
         {
             Application.Current.Exit();
         }
 
-        private void digit_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Digit_Tapped(object sender, TappedRoutedEventArgs e)
         {
             //string tempResult = "";         // prepare to make a new string to put back into the panel
 
@@ -226,9 +227,9 @@ namespace Programmer_Calc
             }
             else
             {
-                decimalDisplay.Text = trim(converter.binaToDeci(currentBinary));
-                octalDisplay.Text = trim(converter.binaToOcta(currentBinary));
-                hexDisplay.Text = trim(converter.binaToHex(currentBinary));
+                decimalDisplay.Text = Trim(converter.binaToDeci(currentBinary));
+                octalDisplay.Text = Trim(converter.binaToOcta(currentBinary));
+                hexDisplay.Text = Trim(converter.binaToHex(currentBinary));
             }
 
         }
@@ -258,7 +259,7 @@ namespace Programmer_Calc
                 numberPads.Visibility = Visibility.Visible;
                 threeDisplays.Visibility = Visibility.Collapsed;
 
-                calculator.CurrentOnScreen = Double.Parse(converter.binaToDeci(trim(currentBinary)));
+                calculator.CurrentOnScreen = Double.Parse(converter.binaToDeci(Trim(currentBinary)));
                 if(currentArie == 8)
                 {
                     displayResultTextBlock.Text = converter.deciToOcta(calculator.CurrentOnScreen.ToString());
@@ -273,7 +274,7 @@ namespace Programmer_Calc
                 }
                 else
                 {
-                    displayResultTextBlock.Text = trim(currentBinary);
+                    displayResultTextBlock.Text = Trim(currentBinary);
                 }
 
                 twoCom.IsEnabled = false;
@@ -281,7 +282,7 @@ namespace Programmer_Calc
             }
         }
 
-        private void arieTapped(object sender, TappedRoutedEventArgs e)
+        private void Arie_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var button = sender as ToggleButton;
             #region Deci
@@ -426,15 +427,15 @@ namespace Programmer_Calc
 
                 if (currentArie == 10)
                 {
-                    displayResultTextBlock.Text = trim(converter.deciToBina(displayResultTextBlock.Text));
+                    displayResultTextBlock.Text = Trim(converter.deciToBina(displayResultTextBlock.Text));
                 }
                 else if (currentArie == 8)
                 {
-                    displayResultTextBlock.Text = trim(converter.octaToBina(displayResultTextBlock.Text));
+                    displayResultTextBlock.Text = Trim(converter.octaToBina(displayResultTextBlock.Text));
                 }
                 else if (currentArie == 16)
                 {
-                    displayResultTextBlock.Text = trim(converter.hexaToBina(displayResultTextBlock.Text));
+                    displayResultTextBlock.Text = Trim(converter.hexaToBina(displayResultTextBlock.Text));
                 }
                 else
                 {
@@ -466,10 +467,9 @@ namespace Programmer_Calc
             #endregion
         }
 
-        private void twoComClicked(object sender, RoutedEventArgs e)
+        private void Two_Com_Clicked(object sender, RoutedEventArgs e)
         {
-            // GeneratingToast Notification
-            //ToastTemplateType toastTemplate = ToastTemplateType.ToastText01;
+            //Push_Toast();
 
             string tempBinary = "";
             while (currentBinary.Length < 64)
@@ -506,7 +506,7 @@ namespace Programmer_Calc
                 hexDisplay.Text = "N/A";
                 BinaryOn.IsEnabled = false;
 
-                set_Bina_Pad_TapEnabled(false);
+                Set_Bina_Pad_TapEnabled(false);
                 Binary_Encode(tempBinary);
             }
             else                                                                                 // Normal Mode
@@ -532,7 +532,7 @@ namespace Programmer_Calc
                 decimalDisplay.Text = currentDeciLocal;
                 octalDisplay.Text = converter.deciToOcta(currentDeciLocal);
                 hexDisplay.Text = converter.deciToHex(currentDeciLocal);
-                set_Bina_Pad_TapEnabled(true);
+                Set_Bina_Pad_TapEnabled(true);
                 Binary_Encode(currentBinary);
             }
         }
@@ -1297,7 +1297,7 @@ namespace Programmer_Calc
             }
         }
 
-        private string trim(string input)                   // to get rid of the 0s in the front
+        private string Trim(string input)                   // to get rid of the 0s in the front
         {
             bool first = true;
             string newString = "";
@@ -1313,7 +1313,7 @@ namespace Programmer_Calc
             return newString;
         }
 
-        private void set_Bina_Pad_TapEnabled(bool input)
+        private void Set_Bina_Pad_TapEnabled(bool input)
         {
             dig00.IsTapEnabled = input;
             dig01.IsTapEnabled = input;
@@ -1387,5 +1387,21 @@ namespace Programmer_Calc
             dig62.IsTapEnabled = input;
             dig63.IsTapEnabled = input;
         }
+
+        //private void Push_Toast()
+        //{
+        //    // GeneratingToast Notification
+        //    ToastTemplateType toastTemplate = ToastTemplateType.ToastText01;
+        //    XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(toastTemplate);
+
+        //    XmlNodeList toastTextElements = toastXml.GetElementsByTagName("text");
+        //    toastTextElements[0].AppendChild(toastXml.CreateTextNode("Not available for fractionals"));
+
+        //    //IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
+        //    //((XmlElement)toastNode).SetAttribute("duration", "short");
+
+        //    ToastNotification toast = new ToastNotification(toastXml);
+        //    ToastNotificationManager.CreateToastNotifier().Show(toast);
+        //}
     }
 }
