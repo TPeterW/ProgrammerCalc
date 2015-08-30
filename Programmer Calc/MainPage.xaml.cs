@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Phone.UI.Input;
+using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -47,12 +48,17 @@ namespace Programmer_Calc
             justPressedEquals = false;
             currentArie = 10;
 
-            // initialise currentBinary
+            decimalDisplay.Text = "0";
+            octalDisplay.Text = "0";
+            hexDisplay.Text = "0";
+
+            #region initialise currentBinary
             currentBinary = "";
             for(int i = 0; i < 64; i++)
             {
                 currentBinary += "0";
             }
+            #endregion
         }
 
         /// <summary>
@@ -242,6 +248,7 @@ namespace Programmer_Calc
                 hexDisplay.Text = converter.deciToHex(calculator.CurrentOnScreen.ToString());
 
                 showBinaryInput.Begin();
+                twoCom.IsEnabled = true;
             }
             else
             {
@@ -269,6 +276,7 @@ namespace Programmer_Calc
                     displayResultTextBlock.Text = trim(currentBinary);
                 }
 
+                twoCom.IsEnabled = false;
                 hideBinaryInput.Begin();
             }
         }
@@ -418,15 +426,15 @@ namespace Programmer_Calc
 
                 if (currentArie == 10)
                 {
-                    displayResultTextBlock.Text = converter.deciToBina(displayResultTextBlock.Text);
+                    displayResultTextBlock.Text = trim(converter.deciToBina(displayResultTextBlock.Text));
                 }
                 else if (currentArie == 8)
                 {
-                    displayResultTextBlock.Text = converter.octaToBina(displayResultTextBlock.Text);
+                    displayResultTextBlock.Text = trim(converter.octaToBina(displayResultTextBlock.Text));
                 }
                 else if (currentArie == 16)
                 {
-                    displayResultTextBlock.Text = converter.hexaToBina(displayResultTextBlock.Text);
+                    displayResultTextBlock.Text = trim(converter.hexaToBina(displayResultTextBlock.Text));
                 }
                 else
                 {
@@ -460,7 +468,73 @@ namespace Programmer_Calc
 
         private void twoComClicked(object sender, RoutedEventArgs e)
         {
-            // TODO:
+            // GeneratingToast Notification
+            //ToastTemplateType toastTemplate = ToastTemplateType.ToastText01;
+
+            string tempBinary = "";
+            while (currentBinary.Length < 64)
+            {
+                currentBinary = "0" + currentBinary;
+            }
+            for (int i = 0; i < 64; i++)
+            {
+                char thisDigit = currentBinary[i];
+                if (thisDigit == '0')
+                {
+                    tempBinary += '1';
+                }
+                else
+                {
+                    tempBinary += '0';
+                }
+            }
+
+            string currentDeciLocal = (ulong.Parse(converter.binaToDeci(tempBinary)) + 1).ToString();
+            tempBinary = converter.deciToBina(currentDeciLocal);
+            if(tempBinary.Length > 64)                      // get rid of the extra bits
+                tempBinary = tempBinary.Substring(tempBinary.Length - 64);
+            while (tempBinary.Length < 64)
+            {
+                tempBinary = "0" + tempBinary;
+            }
+
+            // Whether to disable other panels or not
+            if ((bool)((ToggleButton)sender).IsChecked)                                         // Two's Complement Mode
+            {
+                decimalDisplay.Text = "N/A";
+                octalDisplay.Text = "N/A";
+                hexDisplay.Text = "N/A";
+                BinaryOn.IsEnabled = false;
+
+                set_Bina_Pad_TapEnabled(false);
+                Binary_Encode(tempBinary);
+            }
+            else                                                                                 // Normal Mode
+            {
+                currentDeciLocal = converter.binaToDeci(currentBinary);
+                BinaryOn.IsEnabled = true;
+                switch (currentArie)
+                {
+                    case 2:
+                        displayResultTextBlock.Text = converter.deciToBina(currentDeciLocal);
+                        break;
+                    case 8:
+                        displayResultTextBlock.Text = converter.deciToOcta(currentDeciLocal);
+                        break;
+                    case 16:
+                        displayResultTextBlock.Text = converter.deciToHex(currentDeciLocal);
+                        break;
+                    case 10:
+                        displayResultTextBlock.Text = currentDeciLocal;
+                        break;
+                }
+
+                decimalDisplay.Text = currentDeciLocal;
+                octalDisplay.Text = converter.deciToOcta(currentDeciLocal);
+                hexDisplay.Text = converter.deciToHex(currentDeciLocal);
+                set_Bina_Pad_TapEnabled(true);
+                Binary_Encode(currentBinary);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -1029,80 +1103,93 @@ namespace Programmer_Calc
             {
                 bina = "0" + bina;
             }
+
+            Binary_Encode(bina);
+
+            Get_Current_Binary();
+
+            CheckSize();
+        }
+
+        private void Binary_Encode(string tempBinary)
+        {
             #region binaryEncoding
-            dig00.Text = bina[63].ToString();
-            dig01.Text = bina[62].ToString();
-            dig02.Text = bina[61].ToString();
-            dig03.Text = bina[60].ToString();
-            dig04.Text = bina[59].ToString();
-            dig05.Text = bina[58].ToString();
-            dig06.Text = bina[57].ToString();
-            dig07.Text = bina[56].ToString();
+            dig00.Text = tempBinary[63].ToString();
+            dig01.Text = tempBinary[62].ToString();
+            dig02.Text = tempBinary[61].ToString();
+            dig03.Text = tempBinary[60].ToString();
+            dig04.Text = tempBinary[59].ToString();
+            dig05.Text = tempBinary[58].ToString();
+            dig06.Text = tempBinary[57].ToString();
+            dig07.Text = tempBinary[56].ToString();
 
-            dig08.Text = bina[55].ToString();
-            dig09.Text = bina[54].ToString();
-            dig10.Text = bina[53].ToString();
-            dig11.Text = bina[52].ToString();
-            dig12.Text = bina[51].ToString();
-            dig13.Text = bina[50].ToString();
-            dig14.Text = bina[49].ToString();
-            dig15.Text = bina[48].ToString();
+            dig08.Text = tempBinary[55].ToString();
+            dig09.Text = tempBinary[54].ToString();
+            dig10.Text = tempBinary[53].ToString();
+            dig11.Text = tempBinary[52].ToString();
+            dig12.Text = tempBinary[51].ToString();
+            dig13.Text = tempBinary[50].ToString();
+            dig14.Text = tempBinary[49].ToString();
+            dig15.Text = tempBinary[48].ToString();
 
-            dig16.Text = bina[47].ToString();
-            dig17.Text = bina[46].ToString();
-            dig18.Text = bina[45].ToString();
-            dig19.Text = bina[44].ToString();
-            dig20.Text = bina[43].ToString();
-            dig21.Text = bina[42].ToString();
-            dig22.Text = bina[41].ToString();
-            dig23.Text = bina[40].ToString();
+            dig16.Text = tempBinary[47].ToString();
+            dig17.Text = tempBinary[46].ToString();
+            dig18.Text = tempBinary[45].ToString();
+            dig19.Text = tempBinary[44].ToString();
+            dig20.Text = tempBinary[43].ToString();
+            dig21.Text = tempBinary[42].ToString();
+            dig22.Text = tempBinary[41].ToString();
+            dig23.Text = tempBinary[40].ToString();
 
-            dig24.Text = bina[39].ToString();
-            dig25.Text = bina[38].ToString();
-            dig26.Text = bina[37].ToString();
-            dig27.Text = bina[36].ToString();
-            dig28.Text = bina[35].ToString();
-            dig29.Text = bina[34].ToString();
-            dig30.Text = bina[33].ToString();
-            dig31.Text = bina[32].ToString();
+            dig24.Text = tempBinary[39].ToString();
+            dig25.Text = tempBinary[38].ToString();
+            dig26.Text = tempBinary[37].ToString();
+            dig27.Text = tempBinary[36].ToString();
+            dig28.Text = tempBinary[35].ToString();
+            dig29.Text = tempBinary[34].ToString();
+            dig30.Text = tempBinary[33].ToString();
+            dig31.Text = tempBinary[32].ToString();
 
-            dig32.Text = bina[31].ToString();
-            dig33.Text = bina[30].ToString();
-            dig34.Text = bina[29].ToString();
-            dig35.Text = bina[28].ToString();
-            dig36.Text = bina[27].ToString();
-            dig37.Text = bina[26].ToString();
-            dig38.Text = bina[25].ToString();
-            dig39.Text = bina[24].ToString();
+            dig32.Text = tempBinary[31].ToString();
+            dig33.Text = tempBinary[30].ToString();
+            dig34.Text = tempBinary[29].ToString();
+            dig35.Text = tempBinary[28].ToString();
+            dig36.Text = tempBinary[27].ToString();
+            dig37.Text = tempBinary[26].ToString();
+            dig38.Text = tempBinary[25].ToString();
+            dig39.Text = tempBinary[24].ToString();
 
-            dig40.Text = bina[23].ToString();
-            dig41.Text = bina[22].ToString();
-            dig42.Text = bina[21].ToString();
-            dig43.Text = bina[20].ToString();
-            dig44.Text = bina[19].ToString();
-            dig45.Text = bina[18].ToString();
-            dig46.Text = bina[17].ToString();
-            dig47.Text = bina[16].ToString();
+            dig40.Text = tempBinary[23].ToString();
+            dig41.Text = tempBinary[22].ToString();
+            dig42.Text = tempBinary[21].ToString();
+            dig43.Text = tempBinary[20].ToString();
+            dig44.Text = tempBinary[19].ToString();
+            dig45.Text = tempBinary[18].ToString();
+            dig46.Text = tempBinary[17].ToString();
+            dig47.Text = tempBinary[16].ToString();
 
-            dig48.Text = bina[15].ToString();
-            dig49.Text = bina[14].ToString();
-            dig50.Text = bina[13].ToString();
-            dig51.Text = bina[12].ToString();
-            dig52.Text = bina[11].ToString();
-            dig53.Text = bina[10].ToString();
-            dig54.Text = bina[9].ToString();
-            dig55.Text = bina[8].ToString();
+            dig48.Text = tempBinary[15].ToString();
+            dig49.Text = tempBinary[14].ToString();
+            dig50.Text = tempBinary[13].ToString();
+            dig51.Text = tempBinary[12].ToString();
+            dig52.Text = tempBinary[11].ToString();
+            dig53.Text = tempBinary[10].ToString();
+            dig54.Text = tempBinary[9].ToString();
+            dig55.Text = tempBinary[8].ToString();
 
-            dig56.Text = bina[7].ToString();
-            dig57.Text = bina[6].ToString();
-            dig58.Text = bina[5].ToString();
-            dig59.Text = bina[4].ToString();
-            dig60.Text = bina[3].ToString();
-            dig61.Text = bina[2].ToString();
-            dig62.Text = bina[1].ToString();
-            dig63.Text = bina[0].ToString();
+            dig56.Text = tempBinary[7].ToString();
+            dig57.Text = tempBinary[6].ToString();
+            dig58.Text = tempBinary[5].ToString();
+            dig59.Text = tempBinary[4].ToString();
+            dig60.Text = tempBinary[3].ToString();
+            dig61.Text = tempBinary[2].ToString();
+            dig62.Text = tempBinary[1].ToString();
+            dig63.Text = tempBinary[0].ToString();
             #endregion
+        }
 
+        private void Get_Current_Binary()
+        {
             #region currentBinaryUpdate
             currentBinary = "";
 
@@ -1178,8 +1265,6 @@ namespace Programmer_Calc
             currentBinary += dig01.Text;
             currentBinary += dig00.Text;
             #endregion
-
-            CheckSize();
         }
 
         private void CheckSize()
@@ -1226,6 +1311,81 @@ namespace Programmer_Calc
             }
 
             return newString;
+        }
+
+        private void set_Bina_Pad_TapEnabled(bool input)
+        {
+            dig00.IsTapEnabled = input;
+            dig01.IsTapEnabled = input;
+            dig02.IsTapEnabled = input;
+            dig03.IsTapEnabled = input;
+            dig04.IsTapEnabled = input;
+            dig05.IsTapEnabled = input;
+            dig06.IsTapEnabled = input;
+            dig07.IsTapEnabled = input;
+
+            dig08.IsTapEnabled = input;
+            dig09.IsTapEnabled = input;
+            dig10.IsTapEnabled = input;
+            dig11.IsTapEnabled = input;
+            dig12.IsTapEnabled = input;
+            dig13.IsTapEnabled = input;
+            dig14.IsTapEnabled = input;
+            dig15.IsTapEnabled = input;
+
+            dig16.IsTapEnabled = input;
+            dig17.IsTapEnabled = input;
+            dig18.IsTapEnabled = input;
+            dig19.IsTapEnabled = input;
+            dig20.IsTapEnabled = input;
+            dig21.IsTapEnabled = input;
+            dig22.IsTapEnabled = input;
+            dig23.IsTapEnabled = input;
+
+            dig24.IsTapEnabled = input;
+            dig25.IsTapEnabled = input;
+            dig26.IsTapEnabled = input;
+            dig27.IsTapEnabled = input;
+            dig28.IsTapEnabled = input;
+            dig29.IsTapEnabled = input;
+            dig30.IsTapEnabled = input;
+            dig31.IsTapEnabled = input;
+
+            dig32.IsTapEnabled = input;
+            dig33.IsTapEnabled = input;
+            dig34.IsTapEnabled = input;
+            dig35.IsTapEnabled = input;
+            dig36.IsTapEnabled = input;
+            dig37.IsTapEnabled = input;
+            dig38.IsTapEnabled = input;
+            dig39.IsTapEnabled = input;
+
+            dig40.IsTapEnabled = input;
+            dig41.IsTapEnabled = input;
+            dig42.IsTapEnabled = input;
+            dig43.IsTapEnabled = input;
+            dig44.IsTapEnabled = input;
+            dig45.IsTapEnabled = input;
+            dig46.IsTapEnabled = input;
+            dig47.IsTapEnabled = input;
+
+            dig48.IsTapEnabled = input;
+            dig49.IsTapEnabled = input;
+            dig50.IsTapEnabled = input;
+            dig51.IsTapEnabled = input;
+            dig52.IsTapEnabled = input;
+            dig53.IsTapEnabled = input;
+            dig54.IsTapEnabled = input;
+            dig55.IsTapEnabled = input;
+
+            dig56.IsTapEnabled = input;
+            dig57.IsTapEnabled = input;
+            dig58.IsTapEnabled = input;
+            dig59.IsTapEnabled = input;
+            dig60.IsTapEnabled = input;
+            dig61.IsTapEnabled = input;
+            dig62.IsTapEnabled = input;
+            dig63.IsTapEnabled = input;
         }
     }
 }

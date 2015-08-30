@@ -384,20 +384,22 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="twoCom"
-                              Grid.Column="0"
-                              Content="2's Com"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              Click="twoComClicked"/>
+            <ToggleButton x:Name="twoCom"
+                          Grid.Column="0"
+                          Content="2's Com"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          IsChecked="False"
+                          IsEnabled="False"
+                          Tapped="twoComClicked"/>
 
             <ToggleButton x:Name="BinaryOn"
-                              Grid.Column="1"
-                              Content="Binary Input" 
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              IsChecked="False"
-                              Tapped="BinaryOn_Tapped"/>
+                          Grid.Column="1"
+                          Content="Binary Input" 
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          IsChecked="False"
+                          Tapped="BinaryOn_Tapped"/>
         </Grid>
 
 
