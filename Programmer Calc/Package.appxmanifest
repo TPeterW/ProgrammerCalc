@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="84dec160-a2c0-450f-ac34-d1b5cb31154b" Publisher="CN=韬" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="84dec160-a2c0-450f-ac34-d1b5cb31154b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="35186TPWang.ProgrammerCalc" Publisher="CN=9C4B1274-6AA0-4C92-BFB4-E83295097D21" Version="2015.902.1.2" />
+  <mp:PhoneIdentity PhoneProductId="5142b02a-1f64-4cd5-8302-f476b90b8c24" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Programmer Calc</DisplayName>
-    <PublisherDisplayName>韬</PublisherDisplayName>
+    <PublisherDisplayName>TPW Studio</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
